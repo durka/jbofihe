@@ -745,9 +745,13 @@ BLOCK STAGE3_TAIL
     STATE after_hyph
         H  -> goto_c
         HS -> goto_s
+        V -> check_v
 
     STATE goto_c -> later_c.in_after_c
     STATE goto_s -> later_c.in_after_s
+    STATE check_v
+        VX -> goto_v
+    STATE goto_v -> exit, later_c.in, later_v.in, later_v.main
 
     STATE later_c.exit -> later_v.in
     STATE later_v.ex_multi -> exit, later_c.in
@@ -766,6 +770,7 @@ BLOCK STAGE3_SHORT
 
     STATE tail.goto_c (AT_S3_3)
     STATE tail.goto_s (AT_S3_3)
+    STATE tail.check_v (AT_S3_3)
     STATE tail.exit -> exit
 
 ENDBLOCK
@@ -782,6 +787,7 @@ BLOCK STAGE3_LONG
 
     STATE tail.goto_c (AT_S3_4)
     STATE tail.goto_s (AT_S3_4)
+    STATE tail.check_v (AT_S3_4)
     STATE tail.exit -> exit
 
 ENDBLOCK
@@ -843,8 +849,10 @@ BLOCK X_STAGE3
 # Add attributes for grabbing hyphen position
     STATE short_tail.goto_c (AT_XS3_3)
     STATE short_tail.goto_s (AT_XS3_3)
+    STATE short_tail.check_v (AT_XS3_3)
     STATE long_tail.goto_c (AT_XS3_4)
     STATE long_tail.goto_s (AT_XS3_4)
+    STATE long_tail.check_v (AT_XS3_4)
     
 ENDBLOCK
 #}}}
